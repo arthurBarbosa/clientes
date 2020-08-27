@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/clientes")
 public class ClienteController {
 
-    @Autowired
     private final ClienteRepository repository;
 
     public ClienteController(ClienteRepository repository) {
