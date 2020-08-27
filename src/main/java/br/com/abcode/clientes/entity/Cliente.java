@@ -2,6 +2,7 @@ package br.com.abcode.clientes.entity;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,9 @@ import java.time.LocalDate;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cliente implements Serializable {
 
     @Id
@@ -25,4 +29,8 @@ public class Cliente implements Serializable {
     
     private LocalDate dataCadastro;
 
+    @PrePersist
+    public void prePersist(){
+        setDataCadastro(LocalDate.now());
+    }
 }
