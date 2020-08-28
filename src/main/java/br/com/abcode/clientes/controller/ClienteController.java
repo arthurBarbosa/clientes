@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/api/clientes")
 public class ClienteController {
@@ -18,14 +20,14 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente salvar(@RequestBody Cliente cliente) {
+    public Cliente salvar(@RequestBody @Valid Cliente cliente) {
         return repository.save(cliente);
     }
 
     @GetMapping("/{id}")
     public Cliente buscarPorId(@PathVariable Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum cliente encontrado com id: " + id));
     }
 
     @DeleteMapping("/{id}")
@@ -37,12 +39,12 @@ public class ClienteController {
                     repository.delete(cliente);
                     return Void.TYPE;
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum cliente encontrado com id: " + id));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Integer id, @RequestBody Cliente clienteNovo) {
+    public void atualizar(@Valid @PathVariable Integer id, @RequestBody Cliente clienteNovo) {
         repository
                 .findById(id)
                 .map(cliente -> {

@@ -24,11 +24,12 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
+    @NotEmpty(message = "{campo.nome.obrigatorio}")
     @Column(nullable = false, length = 150)
     private String nome;
 
-    @CPF
+    @NotEmpty(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.invalido}")
     @Column(nullable = false, length = 11)
     private String cpf;
 
