@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/servicos-prestados")
@@ -41,4 +42,14 @@ public class ServicoController {
 
         return repository.save(servico);
     }
+
+    @GetMapping
+    public List<Servico> pesquisar(
+            @RequestParam(value = "nome", required = false, defaultValue = "") String nome,
+            @RequestParam(value = "mes", required = false) Integer mes
+    ) {
+        return repository.findByNomeClienteAndMes("%" + nome + "%", mes);
+    }
+
+
 }
