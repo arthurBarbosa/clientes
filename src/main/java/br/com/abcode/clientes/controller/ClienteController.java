@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api/clientes")
 public class ClienteController {
@@ -21,9 +20,10 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> listar(){
-       return repository.findAll();
+    public List<Cliente> listar() {
+        return repository.findAll();
     }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente salvar(@RequestBody @Valid Cliente cliente) {
