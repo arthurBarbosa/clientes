@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/api/clientes")
 public class ClienteController {
@@ -18,6 +20,10 @@ public class ClienteController {
         this.repository = repository;
     }
 
+    @GetMapping
+    public List<Cliente> listar(){
+       return repository.findAll();
+    }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente salvar(@RequestBody @Valid Cliente cliente) {

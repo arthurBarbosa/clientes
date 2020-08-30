@@ -1,10 +1,12 @@
 package br.com.abcode.clientes.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -23,5 +25,9 @@ public class Servico implements Serializable {
 
     @Column
     private BigDecimal valor;
+
+    @Column
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate data;
 
 }
