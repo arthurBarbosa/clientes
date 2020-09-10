@@ -1,5 +1,6 @@
 package br.com.abcode.clientes.entity;
 
+import br.com.abcode.clientes.enums.StatusPedidoEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,9 +37,22 @@ public class Pedido implements Serializable {
     @NotNull
     private BigDecimal total;
 
+    private StatusPedidoEnum status;
+
     @OneToOne(mappedBy = "pedido")
     private Pagamento pagamento;
 
     @OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
     private Set<ItemPedido> itens = new HashSet<>();
+
+    /**
+     * Responsável por definir o proximo status do pedido
+     */
+    public void definirProximoStatus() {
+        int ordem = status.getOrdem();
+        StatusPedidoEnum newStatus = StatusPedidoEnum.fromOrdem(ordem + 1);
+        if (newStatus != null) {
+            this.status = newStatus;
+        }
+    }
 }
